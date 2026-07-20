@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Glazur Lab — вечные цветы ручной работы из смолы</title>
+  <meta name="description" content="Цветы и украшения ручной работы из ювелирной смолы и полимерной глины. Вечная красота для интерьера и особых дней — не требует ухода. Розы, сирень, гортензии, лилии, броши и серьги на заказ." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <header class="nav" id="nav">
+    <a href="#hero" class="nav__logo">Glazur<span>Lab</span></a>
+    <nav class="nav__links">
+      <a href="#birth">Как рождается</a>
+      <a href="#works">Каталог</a>
+      <a href="#shop">Украшения</a>
+      <a href="#order" class="nav__cta">Заказать</a>
+    </nav>
+  </header>
+
+  <!-- 1. HERO -->
+  <section class="hero" id="hero">
+    <div class="hero__glow"></div>
+    <div class="hero__petal hero__petal--1"></div>
+    <div class="hero__petal hero__petal--2"></div>
+    <div class="hero__petal hero__petal--3"></div>
+    <div class="hero__inner">
+      <p class="hero__eyebrow reveal">Ручная работа · смола · УФ-глина</p>
+      <h1 class="hero__title reveal">
+        Цветы, которые<br /><em>не завянут</em> никогда
+      </h1>
+      <p class="hero__lead reveal">
+        Розы, сирень и гортензии из ювелирной смолы и полимерной глины.
+        Живая красота для интерьера и украшения на самые важные дни —
+        без воды, без ухода, навсегда.
+      </p>
+      <div class="hero__actions reveal">
+        <a href="#order" class="btn btn--dark">Заказать букет</a>
+        <a href="#works" class="btn btn--ghost">Смотреть работы</a>
+      </div>
+      <div class="hero__marks reveal">
+        <span>✦ Не требует ухода</span>
+        <span>✦ Вечная красота</span>
+        <span>✦ Ручная роспись</span>
+      </div>
+    </div>
+    <a href="#value" class="hero__scroll" aria-label="Листать вниз">
+      <span></span>
+    </a>
+  </section>
+
+  <!-- 3. BIRTH ANIMATION -->
+  <section class="birth" id="birth">
+    <div class="birth__text">
+      <p class="section__eyebrow reveal">Процесс</p>
+      <h2 class="section__title reveal">Как рождается<br />один цветок</h2>
+      <p class="birth__lead reveal">
+        От куска проволоки до готового цветка — посмотрите, как
+        он оживает в мастерской.
+      </p>
+      <ol class="birth__steps reveal">
+        <li data-step="0"><b>Каркас.</b> Гнём проволоку — рождаются лист и бутон.</li>
+        <li data-step="1"><b>Лепестки.</b> Формируем глиной каждый лепесток.</li>
+        <li data-step="2"><b>Погружение.</b> Опускаем в состав для прочности.</li>
+        <li data-step="3"><b>УФ-закалка.</b> Фиолетовый свет делает глину твёрдой.</li>
+        <li data-step="4"><b>Роспись.</b> Кисть добавляет живой цвет.</li>
+      </ol>
+    </div>
+
+    <div class="birth__stage reveal">
+      <div class="scene" id="scene">
+        <!-- UV light overlay -->
+        <div class="scene__uv" id="sceneUv"></div>
+        <!-- liquid tank -->
+        <div class="scene__liquid" id="sceneLiquid"></div>
+
+        <svg class="flower" viewBox="0 0 200 260" id="flowerSvg" aria-hidden="true">
+          <!-- stem + wire -->
+          <path class="wire stem" d="M100 250 C100 210 98 180 100 150" />
+          <!-- leaf wire -->
+          <path class="wire leaf-wire" d="M100 195 C78 188 66 172 70 152 C88 158 100 174 100 195Z" />
+          <!-- petals wire (5) -->
+          <g class="petals-wires">
+            <path class="wire petal-wire" d="M100 150 C82 140 78 118 100 106 C122 118 118 140 100 150Z" />
+            <path class="wire petal-wire" d="M100 150 C120 148 138 128 132 108 C112 112 100 130 100 150Z" />
+            <path class="wire petal-wire" d="M100 150 C118 165 140 168 148 148 C130 138 110 140 100 150Z" />
+            <path class="wire petal-wire" d="M100 150 C90 168 66 172 58 152 C76 140 92 140 100 150Z" />
+            <path class="wire petal-wire" d="M100 150 C80 150 62 128 68 108 C88 112 100 130 100 150Z" />
+          </g>
+
+          <!-- filled leaf -->
+          <path class="fill leaf-fill" d="M100 195 C78 188 66 172 70 152 C88 158 100 174 100 195Z" />
+          <!-- filled petals -->
+          <g class="petals-fills">
+            <path class="fill petal-fill" d="M100 150 C82 140 78 118 100 106 C122 118 118 140 100 150Z" />
+            <path class="fill petal-fill" d="M100 150 C120 148 138 128 132 108 C112 112 100 130 100 150Z" />
+            <path class="fill petal-fill" d="M100 150 C118 165 140 168 148 148 C130 138 110 140 100 150Z" />
+            <path class="fill petal-fill" d="M100 150 C90 168 66 172 58 152 C76 140 92 140 100 150Z" />
+            <path class="fill petal-fill" d="M100 150 C80 150 62 128 68 108 C88 112 100 130 100 150Z" />
+          </g>
+          <circle class="fill core" cx="100" cy="150" r="12" />
+
+          <!-- UV tracer: a light "pixel" with a soft trail running along the
+               contours while the clay cures. Tail group is drawn under the head. -->
+          <g class="tracer tracer--tail" aria-hidden="true">
+            <path d="M100 195 C78 188 66 172 70 152 C88 158 100 174 100 195Z" />
+            <path d="M100 150 C82 140 78 118 100 106 C122 118 118 140 100 150Z" />
+            <path d="M100 150 C120 148 138 128 132 108 C112 112 100 130 100 150Z" />
+            <path d="M100 150 C118 165 140 168 148 148 C130 138 110 140 100 150Z" />
+            <path d="M100 150 C90 168 66 172 58 152 C76 140 92 140 100 150Z" />
+            <path d="M100 150 C80 150 62 128 68 108 C88 112 100 130 100 150Z" />
+          </g>
+          <g class="tracer tracer--head" aria-hidden="true">
+            <path d="M100 195 C78 188 66 172 70 152 C88 158 100 174 100 195Z" />
+            <path d="M100 150 C82 140 78 118 100 106 C122 118 118 140 100 150Z" />
+            <path d="M100 150 C120 148 138 128 132 108 C112 112 100 130 100 150Z" />
+            <path d="M100 150 C118 165 140 168 148 148 C130 138 110 140 100 150Z" />
+            <path d="M100 150 C90 168 66 172 58 152 C76 140 92 140 100 150Z" />
+            <path d="M100 150 C80 150 62 128 68 108 C88 112 100 130 100 150Z" />
+          </g>
+        </svg>
+
+        <!-- brush -->
+        <div class="scene__brush" id="sceneBrush">
+          <div class="brush__handle"></div>
+          <div class="brush__tip"></div>
+        </div>
+
+        <div class="scene__caption" id="sceneCaption">Каркас</div>
+      </div>
+      <div class="birth__progress">
+        <span class="birth__bar" id="birthBar"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. WORKS CAROUSEL -->
+  <section class="works" id="works">
+    <div class="works__bg" id="worksBg"></div>
+    <div class="works__head reveal">
+      <p class="section__eyebrow">Каталог работ</p>
+      <h2 class="section__title">Каждый цветок<br />живёт в своём цвете</h2>
+    </div>
+
+    <div class="carousel" id="carousel">
+      <button class="carousel__arrow carousel__arrow--prev" id="prevBtn" aria-label="Назад">‹</button>
+
+      <div class="carousel__track" id="track">
+        <!-- slides injected by JS -->
+      </div>
+
+      <button class="carousel__arrow carousel__arrow--next" id="nextBtn" aria-label="Вперёд">›</button>
+    </div>
+
+    <div class="carousel__dots" id="dots"></div>
+  </section>
+
+  <!-- 5. SHOP / JEWELRY -->
+  <section class="shop" id="shop">
+    <div class="shop__head reveal">
+      <p class="section__eyebrow">Украшения</p>
+      <h2 class="section__title">Не только букеты</h2>
+      <p class="shop__lead">Женские украшения ручной работы — та же техника, тот же характер.</p>
+    </div>
+    <div class="shop__grid">
+      <article class="pcard pcard--photo reveal" style="--pc:#3f7fb0">
+        <div class="pcard__photo" style="background-image:url('images/голубая брошка из соцветий гортензии.jpg');background-position:center 88%"></div>
+        <h3>Броши</h3>
+        <p>Акцент на пальто, платье или сумке.</p>
+      </article>
+      <article class="pcard pcard--photo reveal" style="--pc:#8b8f96">
+        <div class="pcard__photo" style="background-image:url('images/серебристая сережка цветочек.jpg');background-position:center 32%"></div>
+        <h3>Серьги</h3>
+        <p>Лёгкие серьги-цветы. Гипоаллергенная фурнитура.</p>
+      </article>
+      <article class="pcard reveal" style="--pc:#3f7fb0">
+        <div class="pcard__art">✺</div>
+        <h3>Кулоны и заколки</h3>
+        <p>Мелкие детали интерьера образа — под настроение и наряд.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- VALUE (перед формой заказа) -->
+  <section class="value" id="value">
+    <div class="value__head reveal">
+      <p class="section__eyebrow">Почему это особенное</p>
+      <h2 class="section__title">Красота, которую можно подарить<br />и оставить навсегда</h2>
+    </div>
+    <div class="value__grid">
+      <article class="vcard reveal">
+        <div class="vcard__ico">❀</div>
+        <h3>Вечное растение</h3>
+        <p>Не вянет и не боится сухого воздуха. Без ухода.</p>
+      </article>
+      <article class="vcard reveal">
+        <div class="vcard__ico">✿</div>
+        <h3>Подарок на важный день</h3>
+        <p>Свадьба, день рождения. Хранит момент годами.</p>
+      </article>
+      <article class="vcard reveal">
+        <div class="vcard__ico">✦</div>
+        <h3>Ручная работа</h3>
+        <p>Каждый лепесток — вручную. Двух одинаковых нет.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- 6. ORDER + CONTACTS -->
+  <section class="order" id="order">
+    <div class="order__inner">
+      <div class="order__left reveal">
+        <p class="section__eyebrow">Заказать</p>
+        <h2 class="section__title">Соберём букет<br />или украшение под вас</h2>
+        <p class="order__lead">
+          Расскажите, что хочется — цветок, цвет, повод. Отвечу в течение дня
+          и подберу вариант под ваш бюджет и дату.
+        </p>
+      </div>
+
+      <form class="order__form reveal" id="orderForm" novalidate>
+        <div class="field">
+          <label for="name">Как вас зовут</label>
+          <input type="text" id="name" name="name" placeholder="Имя" required />
+        </div>
+        <div class="field">
+          <label for="contact">Телефон или @ник</label>
+          <input type="text" id="contact" name="contact" placeholder="+7… или @username" required />
+        </div>
+        <div class="field">
+          <label id="wselLbl">Что хотите заказать</label>
+          <div class="wsel" id="wsel">
+            <button type="button" class="wsel__btn" id="wselBtn" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="wselLbl">
+              <span id="wselText">Выберите работу…</span>
+              <span class="wsel__chev" aria-hidden="true">▾</span>
+            </button>
+            <div class="wsel__panel" id="wselPanel" role="listbox" aria-labelledby="wselLbl">
+              <div class="wsel__list" id="wselList"><!-- built in script.js --></div>
+            </div>
+          </div>
+          <input type="hidden" name="wish" id="wishValue" />
+        </div>
+        <div class="field">
+          <label for="msg">Пожелания</label>
+          <textarea id="msg" name="msg" rows="3" placeholder="Цвет, повод, дата…"></textarea>
+        </div>
+        <button type="submit" class="btn btn--dark btn--full">Отправить заявку</button>
+        <p class="order__note" id="formNote">Нажимая кнопку, вы отправляете заявку — я свяжусь с вами лично.</p>
+      </form>
+
+      <div class="order__contacts reveal">
+        <a class="ccard ccard--vk" href="https://vk.com/glazur_lab" target="_blank" rel="noopener">
+          <span class="ccard__ico ccard__ico--vk">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path fill="currentColor" d="M12.9 16.7c-5.53 0-8.9-3.86-9.04-10.27h2.79c.1 4.7 2.2 6.66 3.83 7.07V6.43h2.66v3.98c1.63-.18 3.34-2.02 3.92-4h2.63c-.44 2.44-2.25 4.28-3.54 5.04 1.29.62 3.35 2.22 4.14 5.25h-2.9c-.62-1.9-2.18-3.38-4.25-3.58v3.58h-.24Z"/>
+            </svg>
+          </span>
+          <span>
+            <b>ВКонтакте</b>
+            <em>Группа Glazur Lab</em>
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <span>Glazur Lab</span>
+    <span>Вечные цветы ручной работы · 2026</span>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
