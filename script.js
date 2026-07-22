@@ -181,6 +181,8 @@ flowers.forEach((f, i) => {
   const slide = document.createElement('article');
   slide.className = 'slide';
   slide.style.backgroundImage = `url("images/${f.file}")`;
+  slide.setAttribute('role', 'img');
+  slide.setAttribute('aria-label', `${f.name}. ${f.desc}`);
   slide.innerHTML = `
     <div class="slide__body">
       <h3>${f.name}</h3>
@@ -190,7 +192,7 @@ flowers.forEach((f, i) => {
   track.appendChild(slide);
 
   const dot = document.createElement('button');
-  dot.setAttribute('aria-label', f.name);
+  dot.setAttribute('aria-label', `Слайд: ${f.name}`);
   dot.addEventListener('click', () => goTo(i));
   dotsWrap.appendChild(dot);
 });

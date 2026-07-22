@@ -3,6 +3,21 @@
 Продающий одностраничник: цветы и украшения ручной работы из ювелирной смолы и
 полимерной глины. Вечная красота для интерьера и подарков — без ухода.
 
+## SEO — что настроено
+
+- `index.html`: `title`, `description`, `robots`, `canonical`, `theme-color`, favicon.
+- Open Graph + Twitter Card для шаринга (превью, описание, изображение).
+- Schema.org JSON-LD: `WebPage`, `WebSite`, `Organization`, `ItemList` с работами.
+- Семантическая разметка: `header`, `nav`, `main`, `section`, `article`, `footer`.
+- Доступность изображений: слайдам и карточкам украшений прописаны `role="img"` и `aria-label`.
+- Созданы `robots.txt` и `sitemap.xml`.
+
+### Перед публикацией заменить домен
+Везде, где написано `https://glazurlab.ru/`, нужно подставить реальный адрес сайта:
+- `index.html`: `<link rel="canonical">`, `og:url`, `og:image`, `twitter:image`, JSON-LD.
+- `robots.txt`: `Sitemap` и `Host`.
+- `sitemap.xml`: `<loc>`.
+
 ## Файлы
 
 | Файл | Что внутри |
@@ -11,6 +26,9 @@
 | `styles.css` | все стили, анимации, адаптив |
 | `script.js` | каталог работ, карусель, анимация «рождения», форма |
 | `images/` | фото работ (используются в карусели и украшениях) |
+| `icons/favicon.svg` | иконка сайта |
+| `robots.txt` | инструкции для поисковых роботов |
+| `sitemap.xml` | карта сайта |
 
 Открывается двойным кликом по `index.html`. После правок в браузере —
 **жёсткое обновление `Ctrl + Shift + R`** (иначе тянется старый CSS/JS из кеша).

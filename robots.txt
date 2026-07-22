@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /?*
+
+Sitemap: https://glazurlab.ru/sitemap.xml
+Host: https://glazurlab.ru

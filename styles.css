@@ -24,6 +24,9 @@ em{font-style:italic}
 a{color:inherit;text-decoration:none}
 img{max-width:100%;display:block}
 
+/* screen-reader only */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
 /* ---------- shared ---------- */
 .section__eyebrow{
   font-size:.72rem;letter-spacing:.32em;text-transform:uppercase;
@@ -392,8 +395,20 @@ img{max-width:100%;display:block}
 .order__note.ok{color:#3f9e6a;font-weight:600}
 
 /* ---------- footer ---------- */
-.footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;padding:34px clamp(20px,5vw,60px);font-size:.85rem;color:var(--ink-soft);border-top:1px solid var(--line)}
-.footer span:first-child{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--ink)}
+.footer{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:40px;padding:54px clamp(20px,5vw,60px);font-size:.9rem;color:var(--ink-soft);border-top:1px solid var(--line)}
+.footer__logo{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:600;color:var(--ink);display:inline-block;margin-bottom:12px}
+.footer__logo span{font-style:italic;opacity:.6}
+.footer__brand p{max-width:360px;line-height:1.55}
+.footer__nav{display:flex;flex-direction:column;gap:10px}
+.footer__nav a{color:var(--ink-soft);transition:color .3s}
+.footer__nav a:hover{color:var(--ink)}
+.footer__contacts{display:flex;flex-direction:column;gap:10px;align-items:flex-start}
+.footer__contacts a{font-weight:600;color:var(--ink);transition:color .3s}
+.footer__contacts a:hover{color:#b8446a}
+@media (max-width:720px){
+  .footer{grid-template-columns:1fr;gap:28px}
+  .footer__contacts{align-items:flex-start}
+}
 
 /* ---------- responsive ---------- */
 @media (max-width:900px){
