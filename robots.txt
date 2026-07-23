@@ -1,6 +1,6 @@
 User-agent: *
 Allow: /
-Disallow: /?*
+Disallow: /*?*
 Crawl-delay: 1
 
 # AI / LLM agents context
@@ -10,10 +10,6 @@ User-agent: ClaudeBot
 User-agent: PerplexityBot
 User-agent: cohere-ai
 Allow: /
-Disallow: /?*
-
-User-agent: *
 Disallow: /*?*
 
 Sitemap: https://glazur-lab.ru/sitemap.xml
-Host: https://glazur-lab.ru

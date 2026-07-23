@@ -77,10 +77,10 @@ stepEls.forEach((el) => {
 /* ============ Works carousel ============ */
 const flowers = [
   {
-    name: 'Красная роза',
+    name: 'Роза',
     file: 'красная роза.jpg',
     desc: 'Глянцевый бордо с золотой каймой лепестков.',
-    price: null,
+    price: '5 900 ₽',
     grad: ['#4a0a12', '#8f1424', '#c8324a'],
     dark: true,
   },
@@ -93,58 +93,58 @@ const flowers = [
     dark: true,
   },
   {
-    name: 'Голубая гортензия',
+    name: 'Гортензия метельчатая',
     file: 'голыбая гортензия метельчатая.jpg',
     desc: 'Дымчатое стекло и золотая проволока.',
-    price: null,
+    price: '3 900 ₽',
     grad: ['#2e4a54', '#5d8794', '#b6cbce'],
     dark: true,
   },
   {
-    name: 'Розовая гортензия',
+    name: 'Гортензия крупнолистная',
     file: 'букет из метельчатой гортензии и кропнолистной цвет розовый и голубой.jpg',
     desc: 'Малиновые соцветия с золотыми листьями.',
-    price: null,
+    price: '4 900 ₽',
     grad: ['#7a1a52', '#c23f8a', '#eeb6d2'],
     dark: true,
   },
   {
-    name: 'Космеи',
+    name: 'Космея',
     file: 'красные и белые космеи с золотистой проволкой и сердцевиной.jpg',
     desc: 'Алые и кремовые с золотой сердцевиной.',
-    price: null,
+    price: '8 000 ₽',
     grad: ['#6e1420', '#b8384a', '#e6c49c'],
     dark: true,
   },
   {
-    name: 'Белая лилия',
+    name: 'Лилия',
     file: 'белая лилия.jpg',
     desc: 'Прозрачные лепестки с янтарными тычинками.',
-    price: null,
+    price: '1 900 ₽',
     grad: ['#b8ad98', '#ddd0bb', '#f7f1e6'],
     dark: false,
   },
   {
-    name: 'Большие подснежники',
+    name: 'Подснежник большой',
     file: 'большие белые подснежники.jpg',
     desc: 'Серебристо-прозрачные первоцветы.',
-    price: null,
+    price: '6 500 ₽',
     grad: ['#7d8894', '#bcc6cf', '#eaeef1'],
     dark: false,
   },
   {
-    name: 'Мелкие подснежники',
+    name: 'Подснежник мини',
     file: 'маленькие белые подснежники.jpg',
     desc: 'Миниатюрные цветы на оливковых стеблях.',
-    price: null,
+    price: '2 900 ₽',
     grad: ['#6f7256', '#a8a684', '#e6e3d2'],
     dark: false,
   },
   {
-    name: 'Ромашки',
+    name: 'Карамельные ромашки',
     file: 'букет в вазе из ромашек2.jpg',
     desc: 'Стеклянные лепестки, янтарные серединки.',
-    price: null,
+    price: '4 900 ₽',
     grad: ['#a98c4e', '#d6c084', '#f2eace'],
     dark: false,
   },
@@ -152,14 +152,16 @@ const flowers = [
 
 // jewelry from the "Украшения" block — also orderable in the form
 const jewelry = [
-  { name: 'Брошь из гортензии', file: 'голубая брошка из соцветий гортензии.jpg', price: null },
-  { name: 'Серьги-цветок', file: 'серебристая сережка цветочек.jpg', price: null },
+  { name: 'Брошь', file: 'голубая брошка из соцветий гортензии.jpg', price: '1 500 ₽' },
+  { name: 'Серьги', file: 'серебристая сережка цветочек.jpg', price: '1 900 ₽' },
 ];
 
 // price shown here when a specific price isn't set yet
 const PRICE_FALLBACK = 'Цена по запросу';
-// how long the work is shown before its price gently appears (ms)
-const PRICE_DELAY = 2200;
+// total time a work stays on screen (ms) — no more than 4.5s per item
+const SLIDE_MS = 4500;
+// first half of that time the work is shown clean, then the caption + price appear
+const PRICE_DELAY = SLIDE_MS / 2;
 let priceTimer = null;
 
 const track = document.getElementById('track');
@@ -253,10 +255,10 @@ track.addEventListener('touchend', (e) => {
 });
 
 // autoplay (pause on hover / when tab hidden)
-let auto = setInterval(next, 6500);
+let auto = setInterval(next, SLIDE_MS);
 const carousel = document.getElementById('carousel');
 carousel.addEventListener('mouseenter', () => clearInterval(auto));
-carousel.addEventListener('mouseleave', () => (auto = setInterval(next, 6500)));
+carousel.addEventListener('mouseleave', () => (auto = setInterval(next, SLIDE_MS)));
 
 render();
 

@@ -5,13 +5,23 @@
   <url>
     <loc>https://glazur-lab.ru/</loc>
     <xhtml:link rel="alternate" hreflang="ru-ru" href="https://glazur-lab.ru/" />
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
     <image:image>
       <image:loc>https://glazur-lab.ru/images/красная%20роза.jpg</image:loc>
-      <image:caption>Красная роза ручной работы из ювелирной смолы</image:caption>
-      <image:title>Красная роза — Glazur Lab</image:title>
+      <image:caption>Красная роза ручной работы из ювелирной смолы — Glazur Lab</image:caption>
+      <image:title>Красная роза — стеклофлористика Glazur Lab</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://glazur-lab.ru/images/голубая%20брошка%20из%20соцветий%20гортензии.jpg</image:loc>
+      <image:caption>Голубая брошь из гортензии ручной работы</image:caption>
+      <image:title>Брошь из гортензии — Glazur Lab</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://glazur-lab.ru/images/серебристая%20сережка%20цветочек.jpg</image:loc>
+      <image:caption>Серебристые серьги-цветы ручной работы</image:caption>
+      <image:title>Серьги-цветок — Glazur Lab</image:title>
     </image:image>
   </url>
 </urlset>

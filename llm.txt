@@ -1,7 +1,7 @@
 # Glazur Lab — context for AI agents and crawlers
 
 ## What this site is
-Glazur Lab is a Russian handmade studio that creates eternal flowers and jewelry from jewelry resin and polymer clay. Products do not wilt, require no water or care, and are suitable for interior decor, weddings, birthdays, and gifts.
+Glazur Lab is a Russian one-person handmade studio run by Alexandra. It is positioned as a "laboratory of light and gloss" that creates glass-floristics: eternal flowers, wedding and evening jewelry, brooches, earrings, pendants, hairpins, hanging charms, and candy-like resin flags. Works look fragile but are durable.
 
 ## Core facts
 - Brand: Glazur Lab
@@ -9,28 +9,35 @@ Glazur Lab is a Russian handmade studio that creates eternal flowers and jewelry
 - Social: https://vk.com/glazur_lab
 - Language: Russian
 - Currency: Russian ruble (RUB)
-- Production: 100% handmade in small batches; every petal is shaped and painted by hand.
-- Materials: jewelry resin, UV-cured polymer clay, wire frame, hypoallergenic fittings for jewelry.
+- Master/Author: Alexandra
+- Tagline / positioning: "Laboratory of light and gloss" (лаборатория света и глянца)
+- Style: glass-floristics, candy colors, transparent resin, hand-painted, UV-cured polymer clay
+- Production: 100% handmade; each petal, jewel, and charm made by hand; no two pieces are identical
+- Materials: jewelry resin, UV-cured polymer clay, wire frame, hypoallergenic fittings for jewelry
 
-## Products
-- Eternal flowers: red roses, lilac, blue and pink hydrangeas, cosmos, white lilies, large and small snowdrops, chamomiles.
-- Handmade jewelry: brooches, earrings, pendants, hairpins.
-- Custom orders accepted.
+## Product categories
+1. Interior flowers (eternal flowers): red roses, lilac, blue and pink hydrangeas, cosmos, white lilies, large and small snowdrops, chamomiles.
+2. Wedding and evening jewelry: brooches, earrings, pendants, hairpins.
+3. Accessories: candy-like resin flags, hanging charms, small decor items.
+4. Custom orders: bouquets for brides, jewelry matched to a dress or outfit, gifts.
 
-## How a flower is made
+## How a flower is made (5 steps)
 1. Wire frame is bent into stems, leaves and buds.
 2. Each petal is shaped by hand from polymer clay.
-3. The piece is dipped into a resin compound for strength.
-4. UV light hardens the clay.
-5. Hand painting adds living color.
+3. The piece is dipped into a resin compound for transparency and strength.
+4. UV light hardens the clay, making it glass-like.
+5. Hand painting adds living color so the flower plays with light.
 
 ## Order process
-- Fill the order form on the website or contact the VK group.
-- Provide flower type, color, and occasion.
-- The studio replies within one day and proposes options for the budget and date.
+- Fill the order form on the website or message the VK group https://vk.com/glazur_lab.
+- Provide flower type, color, and occasion (wedding, evening, gift, etc.).
+- Alexandra replies within one day and proposes options for the budget and date.
 
 ## Pricing
 - Prices are set per request; the site shows "Цена по запросу" until a real price is configured.
 
 ## Region
-- Russia, Russian-speaking customers worldwide.
+- Russia, Russian-speaking customers worldwide. Shipping/customs depend on destination.
+
+## Popular hashtags / search concepts used by the brand
+#букетневесты #ручнаяработа #интерьерныецветы #цветыручнойработы #стеклянныецветы #украшения #вечерниеукрашения #свадебныеукрашения #ручнаяработаназаказ #украшениядлясвадьбы #брошь #витраль #glazur_lab

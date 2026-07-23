@@ -7,8 +7,8 @@
 
 - `index.html`: `title`, `description`, `keywords`, `robots`, `canonical`, `hreflang`, `theme-color`, favicon.
 - Open Graph + Twitter Card для шаринга (превью, описание, изображение).
-- Schema.org JSON-LD (`@graph`): `WebPage`, `WebSite`, `Organization`, `BreadcrumbList`,
-  `HowTo` (5 этапов), `FAQPage` (5 вопросов), `ItemList` с работами.
+- Schema.org JSON-LD (`@graph`): `WebPage`, `WebSite` (с `SearchAction`), `Organization` + `ContactPoint`, `BreadcrumbList`,
+  `HowTo` (5 этапов), `FAQPage` (5 вопросов), `ItemList` с `Product`/`Offer`/`Brand`/`material`.
 - Текстовый блок «О мастерской» + FAQ (секция `.seo-text`) — читаемый живой текст
   и вопросы-ответы для поисковиков и LLM-агентов. Дублирует данные из `FAQPage`
   обычным видимым текстом (ничего не скрыто под аккордеон).
@@ -16,14 +16,23 @@
   даже если JS не выполнился.
 - Семантическая разметка: `header`, `nav`, `main`, `section`, `article`, `footer`.
 - Доступность изображений: слайдам и карточкам украшений прописаны `role="img"` и `aria-label`.
-- Созданы `robots.txt`, `sitemap.xml`, `llm.txt` (контекст для LLM-агентов) и файл
+- Созданы `robots.txt`, `sitemap.xml` с изображениями, `llm.txt` (контекст для LLM-агентов) и файл
   подтверждения Яндекс.Вебмастера.
+
+### Позиционирование
+Сайт позиционируется как **лаборатория света и глянца** мастера Александры:
+стеклофлористика, карамельные цветы, интерьерные букеты, свадебные и вечерние украшения,
+броши, серьги, заколки, подвесы и флажки ручной работы.
 
 ### Перед публикацией заменить домен
 Везде, где написано `https://glazur-lab.ru/`, нужно подставить реальный адрес сайта:
 - `index.html`: `<link rel="canonical">`, `og:url`, `og:image`, `twitter:image`, JSON-LD.
 - `robots.txt`: `Sitemap` и `Host`.
 - `sitemap.xml`: `<loc>`.
+
+### Проверить файл подтверждения Яндекса
+В корне лежит `yandex_787dac6b9cff1782.html`. Если Яндекс.Вебмастер даст новый код —
+удалите старый файл и создайте новый с тем именем, которое даст Яндекс.
 
 ## Файлы
 
@@ -102,7 +111,7 @@
 
 - `PRICE_DELAY` — пауза перед показом подписи и цены (сейчас `2200` мс).
 - `PRICE_FALLBACK` — текст, когда цена не задана (`'Цена по запросу'`).
-- автопрокрутка карусели — `setInterval(next, 6500)`.
+- автопрокрутка карусели — `setInterval(next, 3000)` (3 секунды).
 
 ## TODO — что осталось от заказчика
 
