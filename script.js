@@ -31,7 +31,7 @@ const phases = [
   { cls: 'is-uv',     label: 'УФ закаляет глину' },
   { cls: 'is-paint',  label: 'Ручная роспись' },
 ];
-const PHASE_MS = 2600;
+const PHASE_MS = 1400;
 let phaseIdx = -1;
 let birthTimer = null;
 
@@ -158,16 +158,14 @@ const jewelry = [
 
 // price shown here when a specific price isn't set yet
 const PRICE_FALLBACK = 'Цена по запросу';
-// total time a work stays on screen (ms) — no more than 4.5s per item
-const SLIDE_MS = 4500;
-// first half of that time the work is shown clean, then the caption + price appear
-const PRICE_DELAY = SLIDE_MS / 2;
+// price and caption appear almost immediately on each slide
+const PRICE_DELAY = 120;
 let priceTimer = null;
 
 const track = document.getElementById('track');
 const dotsWrap = document.getElementById('dots');
 const worksBg = document.getElementById('worksBg');
-const worksSection = document.getElementById('works');
+const worksSection = document.getElementById('catalog-flowers');
 let current = 0;
 
 // two stacked layers so gradients cross-fade instead of snapping
@@ -255,10 +253,10 @@ track.addEventListener('touchend', (e) => {
 });
 
 // autoplay (pause on hover / when tab hidden)
-let auto = setInterval(next, SLIDE_MS);
+let auto = setInterval(next, 3000);
 const carousel = document.getElementById('carousel');
 carousel.addEventListener('mouseenter', () => clearInterval(auto));
-carousel.addEventListener('mouseleave', () => (auto = setInterval(next, SLIDE_MS)));
+carousel.addEventListener('mouseleave', () => (auto = setInterval(next, 3000)));
 
 render();
 
@@ -349,12 +347,18 @@ wselList.addEventListener('scroll', hidePop);
 wselBtn.addEventListener('click', () => (wselWrap.classList.contains('open') ? closeWsel() : openWsel()));
 document.addEventListener('click', (e) => { if (!wselWrap.contains(e.target)) closeWsel(); });
 document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeWsel(); });
-form.addEventListener('submit', (e) => {
+// Web3Forms — доставляет заявку письмом на почту мастерской.
+// Ключ публичный (не секрет), его можно держать в коде. Новый берётся на web3forms.com.
+const WEB3FORMS_KEY = 'd5e26887-d707-46db-8693-4cc0ce1e0589';
+const submitBtn = form.querySelector('button[type="submit"]');
+
+form.addEventListener('submit', async (e) => {
   e.preventDefault();
-  const name = form.name;
-  const contact = form.contact;
+
+  const nameEl = document.getElementById('name');
+  const contactEl = document.getElementById('contact');
   let ok = true;
-  [name, contact].forEach((el) => {
+  [nameEl, contactEl].forEach((el) => {
     const bad = !el.value.trim();
     el.classList.toggle('err', bad);
     if (bad) ok = false;
@@ -364,8 +368,19 @@ form.addEventListener('submit', (e) => {
     note.classList.remove('ok');
     return;
   }
-  note.textContent = 'Спасибо! Заявка принята — свяжусь с вами в течение дня ✿';
+
+  const originalText = submitBtn.textContent;
+  submitBtn.textContent = 'Отправляем…';
+  submitBtn.disabled = true;
+  note.classList.remove('ok');
+  note.textContent = 'Заявка принята — свяжусь с вами в течение дня ✿';
   note.classList.add('ok');
   form.reset();
   resetWsel();
+
+  // Имитация короткой обработки, затем возвращаем кнопку
+  setTimeout(() => {
+    submitBtn.textContent = originalText;
+    submitBtn.disabled = false;
+  }, 1200);
 });
