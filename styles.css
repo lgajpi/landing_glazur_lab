@@ -118,16 +118,54 @@ img{max-width:100%;display:block}
 }
 
 /* ---------- SEO text block ---------- */
-.seo-text{padding:clamp(80px,12vw,150px) clamp(20px,5vw,60px);background:#fff}
-.seo-text__inner{max-width:760px;margin:0 auto}
-.seo-text h2{margin-bottom:28px;text-align:center}
-.seo-text h3{margin-top:48px;margin-bottom:22px;font-family:'Cormorant Garamond',serif;font-size:1.8rem}
-.seo-text p{margin-bottom:18px;color:var(--ink-soft);font-size:1.02rem;line-height:1.7}
-.seo-text a{color:#b8446a;text-decoration:underline}
-.seo-text__faq{display:grid;gap:18px}
-.seo-text__faq dt{font-weight:600;color:var(--ink);font-size:1.05rem}
-.seo-text__faq dd{color:var(--ink-soft);line-height:1.65;padding-left:0}
-.seo-text__faq dd + dt{margin-top:8px}
+.seo-text{
+  padding:clamp(80px,12vw,150px) clamp(20px,5vw,60px);
+  background:radial-gradient(120% 90% at 50% 0%,#fdf1f4 0%,var(--cream) 50%,#fff 100%);
+}
+.seo-text__inner{max-width:920px;margin:0 auto}
+
+.seo-text__head{text-align:center;margin-bottom:52px}
+.seo-text__head .section__eyebrow{margin-bottom:16px}
+
+.seo-text__body{max-width:720px;margin:0 auto}
+.seo-text__body p{margin-bottom:20px;color:var(--ink-soft);font-size:1.05rem;line-height:1.75}
+.seo-text__body p:last-child{margin-bottom:0}
+.seo-text__lead{
+  font-size:1.28rem;line-height:1.6;color:var(--ink);
+  padding-left:22px;border-left:3px solid #e7a9bd;
+}
+.seo-text__lead strong{font-weight:600}
+.seo-text em{font-style:italic;color:#b8446a;font-weight:500}
+.seo-text a{color:#b8446a;text-decoration:underline;text-underline-offset:3px}
+.seo-text a:hover{text-decoration-thickness:2px}
+
+.seo-text__faq-title{
+  margin:68px 0 30px;text-align:center;
+  font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3.5vw,2.4rem);font-weight:500;
+}
+.seo-text__faq{display:grid;gap:16px}
+.faq-item{
+  background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);
+  padding:26px 30px;
+  transition:transform .5s var(--ease),box-shadow .5s var(--ease),border-color .5s var(--ease);
+}
+.faq-item:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:transparent}
+.faq-item dt{
+  position:relative;padding-left:30px;
+  font-family:'Cormorant Garamond',serif;font-weight:600;
+  color:var(--ink);font-size:1.35rem;line-height:1.25;margin-bottom:12px;
+}
+.faq-item dt::before{
+  content:"❀";position:absolute;left:0;top:.05em;
+  color:#b8446a;font-size:1rem;
+}
+.faq-item dd{color:var(--ink-soft);line-height:1.7;font-size:1rem;padding-left:30px}
+
+@media(max-width:600px){
+  .faq-item{padding:22px 22px}
+  .faq-item dt{padding-left:26px;font-size:1.2rem}
+  .faq-item dd{padding-left:26px}
+}
 
 /* ---------- birth ---------- */
 .birth{
