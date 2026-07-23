@@ -1,6 +1,19 @@
 User-agent: *
 Allow: /
 Disallow: /?*
+Crawl-delay: 1
 
-Sitemap: https://glazurlab.ru/sitemap.xml
-Host: https://glazurlab.ru
+# AI / LLM agents context
+User-agent: ChatGPT-User
+User-agent: GPTBot
+User-agent: ClaudeBot
+User-agent: PerplexityBot
+User-agent: cohere-ai
+Allow: /
+Disallow: /?*
+
+User-agent: *
+Disallow: /*?*
+
+Sitemap: https://glazur-lab.ru/sitemap.xml
+Host: https://glazur-lab.ru
