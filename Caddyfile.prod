@@ -1,0 +1,29 @@
+# Продакшн: Caddy отдаёт статику лендинга по HTTPS (сертификат авто, Let's Encrypt)
+# и проксирует /api/* на Go-бэкенд заявок, висящий рядом на 127.0.0.1:8085.
+#
+# Замени домен на свой. Нужны: A/AAAA-запись домена → IP сервера, открытые порты 80 и 443.
+# Запуск как сервис: положить в /etc/caddy/Caddyfile и `sudo systemctl reload caddy`.
+
+glazur-lab.ru, www.glazur-lab.ru {
+	encode gzip
+
+	# корень со статикой лендинга (index.html, styles.css, script.js, images/…)
+	root * /opt/glazur
+
+	# заявки — на Go-бэк (тот же origin, поэтому CORS не нужен)
+	handle /api/* {
+		reverse_proxy 127.0.0.1:8085
+	}
+
+	# всё остальное — статика
+	handle {
+		file_server
+	}
+
+	# необязательно: заголовки безопасности
+	header {
+		-Server
+		Referrer-Policy strict-origin-when-cross-origin
+		X-Content-Type-Options nosniff
+	}
+}

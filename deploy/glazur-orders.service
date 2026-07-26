@@ -1,0 +1,33 @@
+# systemd-юнит для Go-бэкенда заявок. На сервере:
+#   sudo cp deploy/glazur-orders.service /etc/systemd/system/
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now glazur-orders
+#
+# Логи:   journalctl -u glazur-orders -f
+# Рестарт после деплоя: sudo systemctl restart glazur-orders
+
+[Unit]
+Description=Glazur Lab orders backend (MAX bot)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+# каталог с бинарником и .env (godotenv читает .env из рабочей директории)
+WorkingDirectory=/opt/glazur/backend
+ExecStart=/opt/glazur/backend/glazur-orders
+# секреты берём из .env (MAX_BOT_TOKEN, MAX_CHAT_ID, SMARTCAPTCHA_SERVER_KEY, PORT=8085)
+EnvironmentFile=/opt/glazur/backend/.env
+Restart=on-failure
+RestartSec=3
+# минимальная изоляция
+User=www-data
+Group=www-data
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+ReadOnlyPaths=/opt/glazur
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
