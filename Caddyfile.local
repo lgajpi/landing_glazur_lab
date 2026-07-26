@@ -1,0 +1,20 @@
+# Локальный запуск без сертификата: обычный HTTP на localhost:8080.
+# Схема http:// перед адресом принудительно отключает TLS.
+# Статику отдаёт Caddy, /api/* проксирует на Go-бэк (127.0.0.1:8085).
+#
+# Запуск:  caddy run --config Caddyfile.local
+# Открыть: http://localhost:8080
+http://localhost:8080 {
+	root * /Users/gogelgans/Documents/Work/landing_glazur_lab
+	encode gzip
+
+	# всё, что начинается с /api — на Go-бэк
+	handle /api/* {
+		reverse_proxy 127.0.0.1:8085
+	}
+
+	# остальное — статика лендинга
+	handle {
+		file_server
+	}
+}

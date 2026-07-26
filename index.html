@@ -527,7 +527,7 @@
         </div>
         <div class="field">
           <label for="contact">Телефон</label>
-          <input type="text" id="contact" name="contact" placeholder="+7…" required />
+          <input type="tel" id="contact" name="contact" placeholder="+7 (900) 123-45-67" inputmode="tel" maxlength="18" autocomplete="tel" required />
         </div>
         <div class="field">
           <label id="wselLbl">Что хотите заказать</label>
@@ -546,6 +546,8 @@
           <label for="msg">Пожелания</label>
           <textarea id="msg" name="msg" rows="3" placeholder="Цвет, повод, дата…"></textarea>
         </div>
+        <!-- невидимая капча: контейнер обязателен даже в invisible-режиме -->
+        <div id="captcha-container"></div>
         <button type="submit" class="btn btn--dark btn--full">Отправить заявку</button>
         <p class="order__note" id="formNote">Заполните форму — я свяжусь с вами в течение дня.</p>
       </form>
@@ -648,6 +650,8 @@
     </div>
   </footer>
 
+  <!-- Yandex SmartCaptcha: грузим до script.js, вызываем onloadSmartCaptcha -->
+  <script src="https://smartcaptcha.yandexcloud.net/captcha.js?render=onload&onload=onloadSmartCaptcha" defer></script>
   <script src="script.js"></script>
 </body>
 </html>

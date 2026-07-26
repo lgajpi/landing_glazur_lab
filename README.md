@@ -48,9 +48,31 @@
 | `llm.txt` | краткий контекст о мастерской для LLM-агентов |
 | `yandex_*.html` | файл подтверждения прав в Яндекс.Вебмастере |
 | `Dockerfile`, `docker-compose.yml`, `Caddyfile` | раздача статики через Caddy в Docker |
+| `Caddyfile.local` | локальный запуск: HTTP на `localhost:8080`, `/api/*` → Go-бэк |
+| `backend/` | Go-бэкенд приёма заявок (форма → чат MAX-бота), см. `backend/README.md` |
 
 Открывается двойным кликом по `index.html`. После правок в браузере —
 **жёсткое обновление `Ctrl + Shift + R`** (иначе тянется старый CSS/JS из кеша).
+
+## Локальный запуск (Caddy + Go-бэк)
+
+Чтобы работала форма заявки и капча (нужен настоящий origin, не `file://`),
+поднимаем статику и бэк за Caddy на одном порту.
+
+1. Один раз: `brew install caddy`, а в настройках Yandex SmartCaptcha добавить
+   домен `localhost`.
+2. Терминал 1 — бэк (слушает `:8085`, ключи в `backend/.env`):
+   ```bash
+   cd backend && go run .
+   ```
+3. Терминал 2 — Caddy из корня проекта. Эта команда убивает старые процессы
+   Caddy (иначе порт занят) и поднимает заново:
+   ```bash
+   killall caddy 2>/dev/null; sleep 1; caddy run --config /Users/gogelgans/Documents/Work/landing_glazur_lab/Caddyfile.local
+   ```
+4. Открыть **http://localhost:8080**.
+
+Применить изменения в `Caddyfile.local` без перезапуска: `caddy reload --config Caddyfile.local`.
 
 ## Блоки страницы (сверху вниз)
 

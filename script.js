@@ -347,40 +347,179 @@ wselList.addEventListener('scroll', hidePop);
 wselBtn.addEventListener('click', () => (wselWrap.classList.contains('open') ? closeWsel() : openWsel()));
 document.addEventListener('click', (e) => { if (!wselWrap.contains(e.target)) closeWsel(); });
 document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeWsel(); });
-// Web3Forms — доставляет заявку письмом на почту мастерской.
-// Ключ публичный (не секрет), его можно держать в коде. Новый берётся на web3forms.com.
-const WEB3FORMS_KEY = 'd5e26887-d707-46db-8693-4cc0ce1e0589';
-const submitBtn = form.querySelector('button[type="submit"]');
 
-form.addEventListener('submit', async (e) => {
+// Куда шлём заявку. За Caddy (локально и в проде) фронт и /api — один origin,
+// поэтому путь относительный: /api/order → Caddy проксирует на Go-бэк.
+// Если открыть index.html напрямую через file:// — стучимся прямо в бэк на 8085.
+const ORDER_ENDPOINT = location.protocol === 'file:'
+  ? 'http://localhost:8085/api/order'
+  : '/api/order';
+const submitBtn = form.querySelector('button[type="submit"]');
+const nameEl = document.getElementById('name');
+const contactEl = document.getElementById('contact');
+
+// Нормализует телефон РФ к виду +7XXXXXXXXXX. Возвращает null, если это не номер.
+const normalizeRuPhone = (raw) => {
+  let d = (raw || '').replace(/\D/g, '');
+  if (d.length === 11 && (d[0] === '7' || d[0] === '8')) d = '7' + d.slice(1);
+  else if (d.length === 10) d = '7' + d;
+  else return null;
+  return d.length === 11 && d[0] === '7' ? '+' + d : null;
+};
+
+/* ---- live-маска телефона: авто +7, без дублей, ограничение по длине РФ ---- */
+// Форматирует ввод в +7 (XXX) XXX-XX-XX. Что бы человек ни начал вводить
+// (8, 7, +7, сразу код 9xx) — приводим к единому виду и режем до 11 цифр.
+const formatRuPhone = (raw) => {
+  let d = (raw || '').replace(/\D/g, '');
+  if (d[0] === '8') d = '7' + d.slice(1);      // 8… → 7…
+  else if (d && d[0] !== '7') d = '7' + d;      // код без 7/8 (напр. 9xx) → добавляем 7
+  d = d.slice(0, 11);                           // РФ: 7 + 10 цифр
+  const n = d.slice(1);                          // «национальная» часть, до 10 цифр
+  let out = '+7';
+  if (n.length > 0) out += ' (' + n.slice(0, 3);
+  if (n.length > 3) out += ') ' + n.slice(3, 6);
+  if (n.length > 6) out += '-' + n.slice(6, 8);
+  if (n.length > 8) out += '-' + n.slice(8, 10);
+  return out;
+};
+
+// Показываем +7 при первом фокусе, если поле пустое.
+contactEl.addEventListener('focus', () => {
+  if (!contactEl.value.trim()) contactEl.value = '+7 ';
+});
+// Форматируем на каждый ввод/вставку, каретку держим в конце.
+contactEl.addEventListener('input', () => {
+  contactEl.value = formatRuPhone(contactEl.value);
+  contactEl.classList.remove('err');
+});
+// Если ушли с пустого/«голого» +7 — очищаем, чтобы плейсхолдер вернулся.
+contactEl.addEventListener('blur', () => {
+  if (contactEl.value.replace(/\D/g, '') === '7') contactEl.value = '';
+});
+
+const setNote = (text, ok) => {
+  note.textContent = text;
+  note.classList.toggle('ok', !!ok);
+  note.classList.toggle('bad', !ok);
+};
+
+/* ---- Yandex SmartCaptcha (видимая, чекбокс «Я не робот») ---- */
+// Клиентский ключ капчи — публичный, берётся в Yandex Cloud → SmartCaptcha.
+// Замените на свой ysc1_... Серверный (secret) живёт только в .env бэкенда.
+const SMARTCAPTCHA_SITEKEY = 'ysc1_5uP9m9xMcSINegOhzefzcrdS73QlOiNjcBVUY0hK6bf49214';
+let captchaWidgetId = null;
+let captchaToken = ''; // токен появляется, когда человек прошёл чекбокс
+
+const resetSubmit = () => {
+  submitBtn.textContent = 'Отправить заявку';
+  submitBtn.disabled = false;
+};
+
+// Вызывается скриптом капчи после загрузки (?onload=onloadSmartCaptcha).
+window.onloadSmartCaptcha = () => {
+  if (!window.smartCaptcha) return;
+  captchaWidgetId = window.smartCaptcha.render('captcha-container', {
+    sitekey: SMARTCAPTCHA_SITEKEY,
+    hl: 'ru',
+    // видимый режим (invisible не указываем): рисуется чекбокс в форме
+    callback: (token) => { captchaToken = token; }, // прошли проверку
+  });
+  // токен одноразовый/истекает — сбрасываем, чтобы требовать заново
+  try {
+    window.smartCaptcha.subscribe(captchaWidgetId, 'token-expired', () => { captchaToken = ''; });
+    window.smartCaptcha.subscribe(captchaWidgetId, 'network-error', () => { captchaToken = ''; });
+  } catch (_) { /* не критично */ }
+};
+
+// Проверяет поля формы, подсвечивает ошибки. Возвращает нормализованный
+// телефон или null, если что-то не так (и показывает сообщение).
+const validateForm = () => {
+  const nameBad = !nameEl.value.trim();
+  nameEl.classList.toggle('err', nameBad);
+
+  const phone = normalizeRuPhone(contactEl.value);
+  const phoneBad = phone === null;
+  contactEl.classList.toggle('err', phoneBad);
+
+  const wishBad = !wishValue.value.trim();
+  wselWrap.classList.toggle('err', wishBad);
+
+  if (nameBad || phoneBad || wishBad) {
+    if (nameBad) setNote('Как вас зовут? Без имени не смогу ответить.', false);
+    else if (phoneBad) setNote('Проверьте номер телефона — например +7 900 123-45-67.', false);
+    else setNote('Выберите, что хотите заказать.', false);
+    return null;
+  }
+  return phone;
+};
+
+// Реальная отправка заявки на бэк вместе с токеном капчи.
+const sendOrder = async (captchaToken) => {
+  const phone = normalizeRuPhone(contactEl.value);
+  if (phone === null) return; // страховка, поля уже провалидированы
+
+  const payload = {
+    name: nameEl.value.trim(),
+    phone,
+    wish: wishValue.value.trim(),
+    message: document.getElementById('msg').value.trim(),
+    captchaToken: captchaToken || '',
+  };
+
+  try {
+    const res = await fetch(ORDER_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok) {
+      let msg = 'Не получилось отправить заявку. Попробуйте ещё раз или напишите в VK/Telegram.';
+      try {
+        const data = await res.json();
+        if (data && data.error) msg = data.error;
+      } catch (_) { /* тело не JSON — оставляем общее сообщение */ }
+      throw new Error(msg);
+    }
+    setNote('Заявка принята — свяжусь с вами в течение дня ✿', true);
+    form.reset();
+    resetWsel();
+    nameEl.classList.remove('err');
+    contactEl.classList.remove('err');
+    wselWrap.classList.remove('err');
+  } catch (err) {
+    setNote(err.message, false);
+  } finally {
+    resetSubmit();
+    // токен капчи одноразовый — сбрасываем виджет, чтобы для новой заявки
+    // человек прошёл проверку заново. reset() у виджета иногда бросает
+    // внутреннюю React-ошибку — гасим, чтобы не всплывала наружу.
+    captchaToken = '';
+    try {
+      if (captchaWidgetId !== null && window.smartCaptcha) window.smartCaptcha.reset(captchaWidgetId);
+    } catch (_) { /* внутренняя ошибка виджета — не критично */ }
+  }
+};
+
+form.addEventListener('submit', (e) => {
   e.preventDefault();
 
-  const nameEl = document.getElementById('name');
-  const contactEl = document.getElementById('contact');
-  let ok = true;
-  [nameEl, contactEl].forEach((el) => {
-    const bad = !el.value.trim();
-    el.classList.toggle('err', bad);
-    if (bad) ok = false;
-  });
-  if (!ok) {
-    note.textContent = 'Заполните имя и контакт — так я смогу ответить.';
-    note.classList.remove('ok');
+  // Сначала валидация полей.
+  if (validateForm() === null) return;
+
+  // Токен видимой капчи: берём текущий ответ виджета (или сохранённый из callback).
+  const widgetReady = captchaWidgetId !== null && window.smartCaptcha;
+  const token = widgetReady ? (window.smartCaptcha.getResponse(captchaWidgetId) || captchaToken) : '';
+
+  // Если виджет капчи есть, но не пройден — просим отметить «Я не робот».
+  // Если виджет вообще не загрузился (локалка без сети/домена) — не блокируем,
+  // бэк сам решит по наличию SMARTCAPTCHA_SERVER_KEY.
+  if (widgetReady && !token) {
+    setNote('Пожалуйста, отметьте «Я не робот».', false);
     return;
   }
 
-  const originalText = submitBtn.textContent;
   submitBtn.textContent = 'Отправляем…';
   submitBtn.disabled = true;
-  note.classList.remove('ok');
-  note.textContent = 'Заявка принята — свяжусь с вами в течение дня ✿';
-  note.classList.add('ok');
-  form.reset();
-  resetWsel();
-
-  // Имитация короткой обработки, затем возвращаем кнопку
-  setTimeout(() => {
-    submitBtn.textContent = originalText;
-    submitBtn.disabled = false;
-  }, 1200);
+  sendOrder(token);
 });
