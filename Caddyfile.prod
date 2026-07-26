@@ -1,16 +1,24 @@
-# Продакшн: Caddy отдаёт статику лендинга по HTTPS (сертификат авто, Let's Encrypt)
+# Продакшн на Termux (Android). Caddy отдаёт статику по HTTPS (сертификат авто)
 # и проксирует /api/* на Go-бэкенд заявок, висящий рядом на 127.0.0.1:8085.
 #
-# Замени домен на свой. Нужны: A/AAAA-запись домена → IP сервера, открытые порты 80 и 443.
-# Запуск как сервис: положить в /etc/caddy/Caddyfile и `sudo systemctl reload caddy`.
+#   браузер ─HTTPS→ Caddy :443 ─┬─ статика (index.html, css, js, images)
+#                               └─ /api/* → Go-бэк 127.0.0.1:8085 → MAX Bot API
+#
+# ВАЖНО:
+#   1. Замени домен ниже на свой (тот, что уже работал с сертификатом).
+#   2. Порты 80/443 в Termux требуют ROOT — запускать от root, как раньше:
+#         sudo caddy run --config ~/landing_glazur_lab/Caddyfile.prod
+#      (или через tsu). Без root порты <1024 занять нельзя → permission denied.
+#   3. Go-бэк должен быть запущен на 8085 (иначе /api отдаёт 502):
+#         cd ~/landing_glazur_lab/backend && go run .
 
 glazur-lab.ru, www.glazur-lab.ru {
 	encode gzip
 
-	# корень со статикой лендинга (index.html, styles.css, script.js, images/…)
-	root * /opt/glazur
+	# корень со статикой лендинга — путь в файловой системе Termux
+	root * /data/data/com.termux/files/home/landing_glazur_lab
 
-	# заявки — на Go-бэк (тот же origin, поэтому CORS не нужен)
+	# заявки — на Go-бэк (тот же origin, CORS не нужен)
 	handle /api/* {
 		reverse_proxy 127.0.0.1:8085
 	}
